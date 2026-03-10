@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Заголовок меняется в зависимости от того, редактируем мы или создаем -->
+    <h1>{% if form.instance.pk %}Редактирование{% else %}Добавление{% endif %} товара</h1>
+
+    <form method="post" novalidate>
+        <!-- Защита от подделки запросов (обязательно в Django) -->
+        {% csrf_token %}
+
+        <!-- Вывод полей формы в тегах <p> -->
+        {{ form.as_p }}
+
+        <!-- Блок для отображения ошибок, если форма не прошла валидацию -->
+        {% if form.errors %}
+            <div style="color: red; margin-bottom: 20px;">
+                <strong>Пожалуйста, исправьте ошибки в полях выше.</strong>
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn">Сохранить товар</button>
+        <a href="{% url 'product_list' %}">Отмена</a>
+    </form>
+{% endblock %}
